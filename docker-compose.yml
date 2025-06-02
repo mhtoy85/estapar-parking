@@ -1,44 +1,26 @@
-version: "3.8"
-
+version: '3.8'
 services:
-
-  mysql:
-    image: mysql:8.0
-    container_name: estapar-mysql
-    restart: always
+  postgres:
+    image: postgres:15
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: parking
+      POSTGRES_DB: parking
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "3306:3306"
-    networks:
-      - estapar-net
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
-    container_name: estapar-app
-    restart: always
     depends_on:
-      - mysql
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/parking
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      - postgres
     ports:
       - "3003:3003"
-    networks:
-      - estapar-net
-
-  simulator:
-    image: cfontes0estapar/garage-sim:1.0.0
-    container_name: estapar-simulator
-    network_mode: "host"
-    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/parking
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
 
 volumes:
-  mysql_data:
-
-networks:
-  estapar-net:
+  postgres_data:
