@@ -1,3 +1,6 @@
+server:
+  port: 3003
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/parking
@@ -13,3 +16,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
+
+garage:
+  client:
+    url: http://localhost:3000/garage
