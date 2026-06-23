@@ -1,0 +1,22 @@
+server:
+  port: 3003
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/parking
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+garage:
+  client:
+    url: http://localhost:3000/garage
